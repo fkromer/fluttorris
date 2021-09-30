@@ -1,0 +1,13 @@
+{
+	"configurations": [
+		{
+			"name": "Flutter (debug linux)",
+			"program": "lib/main.dart",
+			"cwd": "fluttorris",
+			"request": "launch",
+			"type": "dart",
+			"deviceId": "linux",
+			"flutterMode": "debug"
+		}
+	]
+}
