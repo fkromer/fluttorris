@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -26,9 +31,38 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+Future<Joke> getJoke(http.Client client) async {
+  final response = await client
+      .get(Uri.parse('https://api.chucknorris.io/jokes/random'));
+
+  return Joke.fromJson(jsonDecode(response.body));
+}
+
+class Joke {
+  final String id;
+  final String url;
+  final String value;
+
+  const Joke({
+    required this.id,
+    required this.url,
+    required this.value,
+  });
+
+  factory Joke.fromJson(Map<String, dynamic> json) {
+    return Joke(
+      id: json['id'] as String,
+      url: json['url'] as String,
+      value: json['value'] as String,
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+
+  Future<Joke>? _futureJoke;
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +74,52 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('assets/images/chucknorris_logo_coloured_small@2x.png'),
+            buildLogo(),
             SizedBox(height: 10),
-            Tooltip(
-              message: 'Request a random joke from chucknorris.io',
-              child: ElevatedButton(
-                style: style,
-                onPressed: () {},
-                child: const Text('Get Joke'),
-              ),
-            ),
+            buildTooltippedButton(),
             SizedBox(height: 10),
-            Image.asset('assets/images/chuck-norris-dancing.gif'),
+            (_futureJoke == null) ? buildDancingChuck() : buildFutureBuilder(),
           ],
         ),
       ),
     );
   }
+
+  Image buildLogo() {
+    return Image.asset('assets/images/chucknorris_logo_coloured_small@2x.png');
+  }
+
+  Image buildDancingChuck() {
+    return Image.asset('assets/images/chuck-norris-dancing.gif');
+  }
+
+  Tooltip buildTooltippedButton() {
+    return Tooltip(
+      message: 'Request a random joke from chucknorris.io',
+      child: ElevatedButton(
+        onPressed: () {
+          setState(() {
+            _futureJoke = getJoke(http.Client());
+          });
+        },
+        child: const Text('Get random Joke'),
+      )
+    );
+  }
+
+  FutureBuilder<Joke> buildFutureBuilder() {
+    return FutureBuilder<Joke>(
+      future: _futureJoke,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.value);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
 }
