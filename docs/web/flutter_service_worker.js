@@ -3,12 +3,12 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "aaff8739665d3fc063c768e0418c2f03",
+  "main.dart.js": "23caa507eb928d326c3cf46b9004e8f5",
 "version.json": "386128ef315d24326558d625779313f4",
-"index.html": "8ec426976b128bd1ef38d7ccfad7b0e1",
-"/": "8ec426976b128bd1ef38d7ccfad7b0e1",
+"index.html": "819e9fc98ca4b4dbee40f44236aa4673",
+"/": "819e9fc98ca4b4dbee40f44236aa4673",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"assets/NOTICES": "bcc49520519b4b83a407ed468803ccff",
+"assets/NOTICES": "381e482b11aed2e565c02a2995f5c92a",
 "assets/AssetManifest.json": "1615809adcb3aeaab224b2956c90bc35",
 "assets/assets/images/chucknorris_logo_coloured_small@2x.png": "39b94c0e41581c1258965096f71484c9",
 "assets/assets/images/chuck-norris-dancing.gif": "7f6ea452d14fd5b50820612b5c2d11fb",
