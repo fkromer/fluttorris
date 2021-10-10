@@ -1,6 +1,7 @@
 # fluttorris
 Flutter implementation of Chuck Norris API desktop client.
 
+![linux_app_screenshot](linux_app.png)
 
 ## Setup on Debian based systems
 
